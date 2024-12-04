@@ -1,0 +1,21 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int N;
+    cin >> N;
+    int A[N];
+    int max_el = -999999999, ind = 0;
+    for ( int i = 0; i < N; i++ )
+    {
+        cin >> A[i];
+        if ( max_el < A[i] )
+        {
+            max_el = A[i];
+            ind = i;
+        }        
+    }
+
+    cout << "Максимальный элемент: " << max_el << "\nЕго индекс: " << ind;
+}
