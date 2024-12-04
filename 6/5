@@ -1,0 +1,17 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    cout << 1 << " дюйм = " << 2.5 << " см\n";
+    int i = 2;
+    do
+    {
+        if ( i < 5 )
+            cout << i << " дюйма = " << i * 2.5 << " см\n";
+        else
+            cout << i << " дюймов = " << i * 2.5 << " см\n";    
+        i ++;
+    }
+    while ( i < 21 );
+}
