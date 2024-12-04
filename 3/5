@@ -1,0 +1,16 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    int a;
+    cin >> a;
+    if ( a == 1 )
+        cout << "Пики";
+    if ( a == 2 )
+        cout << "Трефы";
+    if ( a == 3 )
+        cout << "Бубны";
+    if ( a == 4 )
+        cout << "Червы";
+}
