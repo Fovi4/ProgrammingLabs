@@ -1,0 +1,12 @@
+#include <iostream>
+using namespace std;
+
+int main()
+{
+    float a, b, c;
+    cin >> a >> b >> c;
+    if ( b * b - 4 * a * c >= 0 )
+        cout << "Имеет корни";
+    else
+        cout << "Не имеет корней";
+}
