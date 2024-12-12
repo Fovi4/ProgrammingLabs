@@ -1,0 +1,23 @@
+#include <iostream>
+using namespace std;
+
+int main() 
+{
+    int N, M;
+    cin >> N >> M;
+    int A[N][M];
+    int max_a = -9999999, cnt = 1;
+    for ( int i = 0; i < N; i++ )
+      for ( int j = 0; j < M; j++ )
+      {
+        cin >> A[i][j];
+        if ( max_a == A[i][j] )
+          cnt ++;
+        if ( max_a < A[i][j] )
+        {
+          max_a = A[i][j];
+          cnt = 1;
+        }
+      }
+    cout << cnt;
+}
