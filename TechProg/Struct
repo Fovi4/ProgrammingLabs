@@ -1,0 +1,58 @@
+#include <iostream>
+#include <vector>
+using namespace std;
+
+struct NKA03
+{
+    string name, sex;
+    int height;
+    float weight;
+    NKA03* next;
+};
+
+int main()
+{
+    
+    cout << "Menu: \n0. Add information\n1. Add the person to the beginning\n2. Add the person to the end\n";
+    vector <NKA03> nka;
+    NKA03 A;
+    int a;
+    while (a >= 0 and a <= 2)
+    {
+        cin >> a;
+    switch(a)
+    {
+        case 0:
+        {
+            cout << "Имя: ";
+            cin >> A.name;
+            cout << "\nПол: ";
+            cin >> A.sex;
+            cout << "\nРост: ";
+            cin >> A.height;
+            cout << "\nВес: ";
+            cin >> A.weight;
+            break;
+        }
+        
+        case 1:
+        {
+            nka.insert(nka.begin(), A);
+            break;
+        }
+
+        case 2:
+        {
+            nka.push_back(A);
+            break;
+        }
+        
+        default:
+        cout << endl;
+        break;
+    }        
+    }
+    
+    for (const auto& A : nka)
+        cout << "Name: " << A.name << "\nSex: " << A.sex << endl;
+}
