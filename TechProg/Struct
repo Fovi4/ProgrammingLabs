@@ -4,9 +4,8 @@ using namespace std;
 
 struct NKA03
 {
-    string name, sex;
-    int height;
-    float weight;
+    string name, sex, group;
+    int age;
     NKA03* next;
 };
 
@@ -20,39 +19,41 @@ int main()
     while (a >= 0 and a <= 2)
     {
         cin >> a;
-    switch(a)
-    {
-        case 0:
+        switch(a)
         {
-            cout << "Имя: ";
-            cin >> A.name;
-            cout << "\nПол: ";
-            cin >> A.sex;
-            cout << "\nРост: ";
-            cin >> A.height;
-            cout << "\nВес: ";
-            cin >> A.weight;
-            break;
-        }
+            case 0:
+            {
+                cout << "Имя: ";
+                cin >> A.name;
+                cout << "Пол: ";
+                cin >> A.sex;
+                cout << "Возраст: ";
+                cin >> A.age;
+                cout << "Группа: ";
+                cin >> A.group;
+                break;
+            }
         
-        case 1:
-        {
-            nka.insert(nka.begin(), A);
-            break;
-        }
+            case 1:
+            {
+                nka.insert(nka.begin(), A);
+                break;
+            }
 
-        case 2:
-        {
-            nka.push_back(A);
-            break;
-        }
+            case 2:
+            {
+                nka.push_back(A);
+                break;
+            }
         
-        default:
-        cout << endl;
-        break;
-    }        
+            default:
+            {
+                cout << endl;
+                break;                
+            }
+        }        
     }
     
     for (const auto& A : nka)
-        cout << "Name: " << A.name << "\nSex: " << A.sex << endl;
+        cout << "Имя: " << A.name << "\nПол: " << A.sex << "\nВозраст: " << A.age << "\nГруппа: " << A.group << "\n\n";
 }
