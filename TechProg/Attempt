@@ -1,0 +1,88 @@
+#include <iostream>
+using namespace std;
+
+struct Student
+{
+    string name, ticket, country; // Имя, номер билета, страна студента
+    double avg_score; // Средний балл студента
+    int age; // Возраст студента
+    Student* next; // Указатель на следующий элемент
+};
+
+void add2head (Student *&head, string name, string ticket, int age, string country, double avg_score)
+{
+    Student *st = new Student{name, ticket, country, avg_score, age, head};
+    head = st;
+}
+
+void add2end (Student *&head, string name, string ticket, int age, string country, double avg_score)
+{
+    Student *st = new Student{name, ticket, country, avg_score, NULL};
+    if (head = NULL)
+        head = st;
+    
+    else
+    {
+        Student* tmp = head;
+        while (tmp -> next)
+            tmp = tmp -> next;
+        tmp -> next = st;
+    }
+}
+
+void addAfter (Student *&head, string name, string ticket, int age, string country, double avg_score, int target)
+{
+    Student *temp = head;
+    while (temp && temp -> st != target)
+        temp = temp -> next;
+    Student *st = new Student
+    temp -> next = st;
+}
+
+int main()
+{
+    int a;
+    cin >> a;
+    Student *st;
+    switch (a)
+    {
+        case 0:
+        {
+            Student *st;
+            st = new Student;
+            cout << "Имя студента: ";
+            cin >> st -> name;
+            cout << "Возраст студента: ";
+            cin >> st -> age;
+            cout << "Номер студенческого билета: ";
+            cin >> st -> ticket;
+            cout << "Гражданство студента: ";
+            cin >> st -> country;
+            cout << "Средний балл студента: ";
+            cin >> st -> avg_score;
+        }     
+        
+        case 1:
+        {
+            Student *Head = NULL;
+            st = new Student;
+            cout << "Имя студента: ";
+            cin >> st -> name;
+            cout << "Возраст студента: ";
+            cin >> st -> age;
+            cout << "Номер студенческого билета: ";
+            cin >> st -> ticket;
+            cout << "Гражданство студента: ";
+            cin >> st -> country;
+            cout << "Средний балл студента: ";
+            cin >> st -> avg_score;
+            
+            st -> next = Head;
+            Head = st;
+        }
+        case 2:
+        {
+            
+        }
+    }
+}
