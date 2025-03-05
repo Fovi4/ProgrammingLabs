@@ -1,7 +1,7 @@
-
 #include <iostream>
 using namespace std;
 
+// Структура itself
 struct Student
 {
     string name, ticket, country; // Имя, номер билета, страна студента
@@ -12,6 +12,7 @@ struct Student
 
 Student *head = NULL;
 
+// Добавить информацию о новом студенте
 Student *newStudent()
 {
         Student *st;
@@ -29,6 +30,7 @@ Student *newStudent()
         return st;
 }
 
+// Показать информацию о студентах
 void info( Student *head )
 {
     Student *temp = head;
@@ -59,7 +61,9 @@ void ShowStudents ( Student *head )
 
 int main()
 {
-    cout << "Menu\n0 - Show list of students\n1 - Add info to the beginning\n2 - Add info to the end\n3 - Output the info\n4 - Отчислить student";
+    // Меню
+    cout << "Menu\n0 - Show list of students\n1 - Add info to the beginning\n2 - Add info to the end\n3 - Output the info\n4 - Отчислить student\n5 - Add BEFORE a student\n6 - Add AFTER a student";
+    
     int a;
     Student *st;
     cout << "\n\nEnter a command: ";
@@ -68,27 +72,34 @@ int main()
     {
         switch (a)
         {
+            // Показать список студентов
             case 0:
             {
                 ShowStudents (head);
                 break;
             }
             
+            // Добавить студента в начало списка
             case 1:
             {
                 Student* st = newStudent();
                 
+                // Передача первенства новому студенту
                 st -> next = head;
                 head = st;
                 break;
             }
 
+            // Добавить студента в конец списка
             case 2:
             {
                 Student* st = newStudent();
                 
+                // Если список пуст
                 if ( !head )
                     head = st;
+                
+                // Если список не пуст
                 else
                 {
                     Student* temp = head;
@@ -99,25 +110,34 @@ int main()
                 break;
             }
             
+            // Показать информацию о студентах
             case 3:
             {
                 info(head);
                 break;
             }
             
+            // Удалить студента
             case 4:
             {
+                // Проверка списка на наличие студентов
                 if ( !head )
                 {
                     cout << "Все уже отчислены:]\n";
                     break;
-                }                
+                }
+                
+                // Список студентов
                 ShowStudents(head);
                 
+                // Ввод студента на отчисление
                 string del_st;
                 cout << "Enter ticket number to отчислить: ";
                 cin >> del_st;
+                
                 Student *temp = head;
+                
+                // Если студент в начале
                 if ( head -> ticket == del_st )
                 {
                     head = head -> next;
@@ -127,8 +147,11 @@ int main()
                 
                 else
                 {
+                    // Поиск студента
                     while ( temp -> next && temp -> next -> ticket != del_st )
                         temp = temp -> next;
+                    
+                    // Если есть студент
                     if ( temp -> next && temp -> next -> ticket == del_st )
                     {
                         Student *st2del = temp -> next;
@@ -136,27 +159,33 @@ int main()
                         cout << st2del -> name << " (" << st2del -> ticket << ") successfully отчислен\n";
                         delete st2del;
                     }
+                    
+                    // Если нет студента
                     else
                         cout << "Нормально введи да, нет такого студента. Давай теперь заного команду вводи\n";
                 }
                 break;
             }
 
+            // Добавить студента ПЕРЕД каким-то студентом
             case 5:
             {
+                // Проверка списка на наличие студентов
                 if ( !head )
                 {
                     cout << "Все студенты отчислены>:]\n";
                     break;
                 }
-
+                
+                // Список студентов
                 ShowStudents(head);
 
+                // Ввод студента, перед которым нужно добавить нового
                 string targetTicket;
                 cout << "Enter a ticket to add BEFORE: ";
                 cin >> targetTicket;
             
-                // Если добавляем до первого элемента
+                // Если студент в начале
                 if (head -> ticket == targetTicket)
                 {
                     Student *st = newStudent();
@@ -166,12 +195,13 @@ int main()
                     break;
                 }
             
-                // Поиск элемента, перед которым нужно вставить
                 Student* temp = head;
+                
+                // Поиск студента
                 while ( temp -> next && temp -> next -> ticket != targetTicket)
                     temp = temp -> next;
             
-                // Если элемент найден
+                // Если есть студент
                 if (temp->next && temp->next->ticket == targetTicket)
                 {
                     Student *st = newStudent();
@@ -179,28 +209,35 @@ int main()
                     temp -> next = st;
                     cout << "Student added before " << st -> next -> name << " (" << targetTicket << ")\n";
                 }
+                
+                // Если нет студента
                 else
                     cout << "Нормально введи да, я же список даже дал сначала. Нет обязательно нужно что-то намудрить. Занаво команду вводи теперь\n";
                 break;
             }
+            
+            // Добавить студента ПОСЛЕ какого-то студента
             case 6:
             {
+                // Проверка списка на наличие студентов
                 if ( !head )
                 {
                     cout << "Перед кем добавлять? Никого нет еще\n";
                     break;
                 }
             
+                // Ввод студента, после которого нужно добавить нового
                 string targetTicket;
                 cout << "Enter a ticket to add AFTER: ";
                 cin >> targetTicket;
             
-                // Поиск элемента, после которого нужно вставить
                 Student *temp = head;
+                
+                // Поиск студента
                 while (temp && temp -> ticket != targetTicket)
                     temp = temp->next;
             
-                // Если элемент найден
+                // Если студент есть
                 if (temp && temp -> ticket == targetTicket)
                 {
                     Student* st = newStudent();
@@ -208,21 +245,26 @@ int main()
                     temp->next = st;
                     cout << "Студент добавлен ПОСЛЕ студента с номером билета " << targetTicket << ".\n";
                 }
+                
+                // Если студента нет
                 else
                     cout << "Студент с номером билета " << targetTicket << " не найден.\n";
                 break;
             }
             
+            // Дефолт в стране не есть хорошо
             default:
                 cout << "Ээ введи нормально да >:L";
         }
-
+        
+        // Ввод новой команды
         cout << "\nEnter a command: ";
         cin >> a;
     }
 
     cout << "\nGoodbye >:[";
 
+    // Очищение памяти
     Student* temp;
     while ( head )
     {
