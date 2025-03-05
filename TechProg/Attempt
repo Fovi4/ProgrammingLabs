@@ -10,12 +10,58 @@ struct Student
     Student* next; // Указатель на следующий элемент
 };
 
+Student *head = NULL;
+
+Student *newStudent()
+{
+        Student *st;
+        st = new Student;
+        cout << "Name: ";
+        cin >> st -> name;
+        cout << "Age: ";
+        cin >> st -> age;
+        cout << "Ticket number: ";
+        cin >> st -> ticket;
+        cout << "Country: ";
+        cin >> st -> country;
+        cout << "Average: ";
+        cin >> st -> avg_score;
+        return st;
+}
+
+void info( Student *head )
+{
+    Student *temp = head;
+    cout << endl;
+    int i = 1;
+    while ( temp )
+    {
+        cout << i << ". " << temp -> name << " (" << temp -> ticket << ")\n" << temp -> age << " years\n" << temp -> country << "\nAverage score: " << temp -> avg_score << endl;
+        i++;
+        temp = temp -> next;
+        cout << endl;
+    }
+}
+
+// Показать список студентов
+void ShowStudents ( Student *head )
+{
+    Student *out = head;
+    int i = 1;
+    while ( out )
+    {   
+        cout << i << ". " << out -> name << " (" << out -> ticket << ")\n";
+        i++;
+        out = out -> next;
+    }
+    
+}
+
 int main()
 {
-    cout << "Menu\n0 - Add info\n1 - Add info to the beginning\n2 - Add info to the end\n3 - Output the info\n4 - Отчислить student";
+    cout << "Menu\n0 - Show list of students\n1 - Add info to the beginning\n2 - Add info to the end\n3 - Output the info\n4 - Отчислить student";
     int a;
     Student *st;
-    Student *head = NULL;
     cout << "\n\nEnter a command: ";
     cin >> a;
     while( a >= 0 && a <= 6 )
@@ -24,52 +70,22 @@ int main()
         {
             case 0:
             {
-                Student *st;
-                st = new Student;
-                cout << "Name: ";
-                cin >> st -> name;
-//               cout << "Age: ";
-//                cin >> st -> age;
-                cout << "Ticket number: ";
-                cin >> st -> ticket;
-//                cout << "Country: ";
-//                cin >> st -> country;
-//                cout << "Average: ";
-//                cin >> st -> avg_score;
+                ShowStudents (head);
                 break;
-            }     
+            }
             
             case 1:
             {
-                st = new Student;
-                cout << "Name: ";
-                cin >> st -> name;
-//               cout << "Age: ";
-//                cin >> st -> age;
-                cout << "Ticket number: ";
-                cin >> st -> ticket;
-//                cout << "Country: ";
-//                cin >> st -> country;
-//                cout << "Average: ";
-//                cin >> st -> avg_score;
+                Student* st = newStudent();
                 
                 st -> next = head;
                 head = st;
                 break;
             }
+
             case 2:
             {
-                st = new Student;
-                cout << "Name: ";
-                cin >> st -> name;
-//               cout << "Age: ";
-//                cin >> st -> age;
-                cout << "Ticket number: ";
-                cin >> st -> ticket;
-//                cout << "Country: ";
-//                cin >> st -> country;
-//                cout << "Average: ";
-//                cin >> st -> avg_score;
+                Student* st = newStudent();
                 
                 if ( !head )
                     head = st;
@@ -85,15 +101,7 @@ int main()
             
             case 3:
             {
-                Student *temp = head;
-                int i = 1;
-                while ( temp )
-                {
-                    cout << i << temp -> name << endl;
-                    i++;
-                    temp = temp -> next;
-                    cout << endl;
-                }
+                info(head);
                 break;
             }
             
@@ -104,14 +112,8 @@ int main()
                     cout << "Все уже отчислены:]\n";
                     break;
                 }                
-                Student *out = head;
-                int i = 1;
-                while ( out )
-                {
-                    cout << i << ". " << out -> name << " (" << out -> ticket << ")\n";
-                    i++;
-                    out = out -> next;
-                }
+                ShowStudents(head);
+                
                 string del_st;
                 cout << "Enter ticket number to отчислить: ";
                 cin >> del_st;
@@ -140,12 +142,85 @@ int main()
                 break;
             }
 
+            case 5:
+            {
+                if ( !head )
+                {
+                    cout << "Все студенты отчислены>:]\n";
+                    break;
+                }
+
+                ShowStudents(head);
+
+                string targetTicket;
+                cout << "Enter a ticket to add BEFORE: ";
+                cin >> targetTicket;
+            
+                // Если добавляем до первого элемента
+                if (head -> ticket == targetTicket)
+                {
+                    Student *st = newStudent();
+                    st -> next = head;
+                    head = st;
+                    cout << "Student added before " << st -> next -> name << " (" << targetTicket << ")\n";
+                    break;
+                }
+            
+                // Поиск элемента, перед которым нужно вставить
+                Student* temp = head;
+                while ( temp -> next && temp -> next -> ticket != targetTicket)
+                    temp = temp -> next;
+            
+                // Если элемент найден
+                if (temp->next && temp->next->ticket == targetTicket)
+                {
+                    Student *st = newStudent();
+                    st -> next = temp -> next;
+                    temp -> next = st;
+                    cout << "Student added before " << st -> next -> name << " (" << targetTicket << ")\n";
+                }
+                else
+                    cout << "Нормально введи да, я же список даже дал сначала. Нет обязательно нужно что-то намудрить. Занаво команду вводи теперь\n";
+                break;
+            }
+            case 6:
+            {
+                if ( !head )
+                {
+                    cout << "Перед кем добавлять? Никого нет еще\n";
+                    break;
+                }
+            
+                string targetTicket;
+                cout << "Enter a ticket to add AFTER: ";
+                cin >> targetTicket;
+            
+                // Поиск элемента, после которого нужно вставить
+                Student *temp = head;
+                while (temp && temp -> ticket != targetTicket)
+                    temp = temp->next;
+            
+                // Если элемент найден
+                if (temp && temp -> ticket == targetTicket)
+                {
+                    Student* st = newStudent();
+                    st->next = temp->next;
+                    temp->next = st;
+                    cout << "Студент добавлен ПОСЛЕ студента с номером билета " << targetTicket << ".\n";
+                }
+                else
+                    cout << "Студент с номером билета " << targetTicket << " не найден.\n";
+                break;
+            }
+            
             default:
                 cout << "Ээ введи нормально да >:L";
         }
+
         cout << "\nEnter a command: ";
         cin >> a;
     }
+
     cout << "\nGoodbye >:[";
 
     Student* temp;
