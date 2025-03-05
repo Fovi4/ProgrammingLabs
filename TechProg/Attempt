@@ -83,8 +83,7 @@ int main()
                 int i = 1;
                 while ( temp )
                 {
-                    cout << "\nStudent " << i << endl;
-                    cout << temp -> name << endl;// << temp -> age << " years\n" << temp -> ticket << endl << temp -> country << "\nAverage score: " << temp -> avg_score;
+                    cout << i << temp -> name << endl;
                     i++;
                     temp = temp -> next;
                     cout << endl;
