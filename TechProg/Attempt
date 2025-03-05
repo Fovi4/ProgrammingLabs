@@ -64,6 +64,9 @@ void ShowStudents ( Student *head )
 
 int main()
 {
+    // Установка русского языка
+    setlocale(LC_ALL, "Russian")
+
     // Меню
     cout << "Menu\n0 - Show list of students\n1 - Add info to the beginning\n2 - Add info to the end\n3 - Output the info\n4 - Отчислить student\n5 - Add BEFORE a student\n6 - Add AFTER a student";
     
