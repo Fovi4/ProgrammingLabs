@@ -12,13 +12,13 @@ struct Student
 
 int main()
 {
-    cout << "Menu\n0 - Add info\n1 - Add info to the beginning\n2 - Add info to the end\n3 - Output the info";
+    cout << "Menu\n0 - Add info\n1 - Add info to the beginning\n2 - Add info to the end\n3 - Output the info\n4 - Отчислить student";
     int a;
     Student *st;
     Student *head = NULL;
     cout << "\n\nEnter a command: ";
     cin >> a;
-    while( a <= 6 )
+    while( a >= 0 && a <= 6 )
     {
         switch (a)
         {
@@ -71,10 +71,15 @@ int main()
 //                cout << "Average: ";
 //                cin >> st -> avg_score;
                 
-                Student *temp = head;
-                while ( temp -> next )
-                    temp = temp -> next;
-                temp -> next = st;
+                if ( !head )
+                    head = st;
+                else
+                {
+                    Student* temp = head;
+                    while (temp -> next)
+                        temp = temp -> next;
+                    temp -> next = st;
+                }
                 break;
             }
             
@@ -94,6 +99,11 @@ int main()
             
             case 4:
             {
+                if ( !head )
+                {
+                    cout << "Все уже отчислены:]\n";
+                    break;
+                }                
                 Student *out = head;
                 int i = 1;
                 while ( out )
@@ -117,7 +127,7 @@ int main()
                 {
                     while ( temp -> next && temp -> next -> ticket != del_st )
                         temp = temp -> next;
-                    if ( temp -> next -> ticket == del_st && temp -> next )
+                    if ( temp -> next && temp -> next -> ticket == del_st )
                     {
                         Student *st2del = temp -> next;
                         temp -> next = temp -> next -> next;
@@ -129,7 +139,7 @@ int main()
                 }
                 break;
             }
-            
+
             default:
                 cout << "Ээ введи нормально да >:L";
         }
@@ -137,6 +147,14 @@ int main()
         cin >> a;
     }
     cout << "\nGoodbye >:[";
+
+    Student* temp;
+    while ( head )
+    {
+        temp = head;
+        head = head -> next;
+        delete temp;
+    }
     
     return 0;
 }
