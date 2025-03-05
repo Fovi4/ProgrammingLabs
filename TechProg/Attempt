@@ -28,14 +28,14 @@ int main()
                 st = new Student;
                 cout << "Name: ";
                 cin >> st -> name;
-                cout << "Age: ";
-                cin >> st -> age;
+//               cout << "Age: ";
+//                cin >> st -> age;
                 cout << "Ticket number: ";
                 cin >> st -> ticket;
-                cout << "Country: ";
-                cin >> st -> country;
-                cout << "Average: ";
-                cin >> st -> avg_score;
+//                cout << "Country: ";
+//                cin >> st -> country;
+//                cout << "Average: ";
+//                cin >> st -> avg_score;
                 break;
             }     
             
@@ -44,14 +44,14 @@ int main()
                 st = new Student;
                 cout << "Name: ";
                 cin >> st -> name;
-                cout << "Age: ";
-                cin >> st -> age;
+//               cout << "Age: ";
+//                cin >> st -> age;
                 cout << "Ticket number: ";
                 cin >> st -> ticket;
-                cout << "Country: ";
-                cin >> st -> country;
-                cout << "Average: ";
-                cin >> st -> avg_score;
+//                cout << "Country: ";
+//                cin >> st -> country;
+//                cout << "Average: ";
+//                cin >> st -> avg_score;
                 
                 st -> next = head;
                 head = st;
@@ -62,14 +62,14 @@ int main()
                 st = new Student;
                 cout << "Name: ";
                 cin >> st -> name;
-                cout << "Age: ";
-                cin >> st -> age;
+//               cout << "Age: ";
+//                cin >> st -> age;
                 cout << "Ticket number: ";
                 cin >> st -> ticket;
-                cout << "Country: ";
-                cin >> st -> country;
-                cout << "Average: ";
-                cin >> st -> avg_score; 
+//                cout << "Country: ";
+//                cin >> st -> country;
+//                cout << "Average: ";
+//                cin >> st -> avg_score;
                 
                 Student *temp = head;
                 while ( temp -> next )
@@ -94,31 +94,39 @@ int main()
             
             case 4:
             {
-                Student *temp = head;
+                Student *out = head;
                 int i = 1;
-                while ( temp )
+                while ( out )
                 {
-                    cout << i << ". " temp -> name << ' (' << temp -> ticket << ")\n";
+                    cout << i << ". " << out -> name << " (" << out -> ticket << ")\n";
                     i++;
-                    temp = temp -> next;
-                    cout << endl;
+                    out = out -> next;
                 }
                 string del_st;
                 cout << "Enter ticket number to отчислить: ";
                 cin >> del_st;
-                
-                *temp = head;
-                while ( temp -> next && temp -> next -> ticket != del_st )
-                    temp = temp -> next;
-                if ( temp -> next -> ticket != del_st )
+                Student *temp = head;
+                if ( head -> ticket == del_st )
                 {
-                    Student *st2del = temp -> next;
-                    temp -> next = temp -> next -> next;
-                    cout << st2del -> name << " (" << st2del -> ticket << ") successfully отчислен\n";
-                    delete st2del;
+                    head = head -> next;
+                    cout << temp -> name << " (" << temp -> ticket << ") successfully отчислен\n";
+                    delete temp;
                 }
+                
                 else
-                    cout << "Нормально введи да, нет такого студента. Давай теперь заного команду вводи\n";
+                {
+                    while ( temp -> next && temp -> next -> ticket != del_st )
+                        temp = temp -> next;
+                    if ( temp -> next -> ticket == del_st && temp -> next )
+                    {
+                        Student *st2del = temp -> next;
+                        temp -> next = temp -> next -> next;
+                        cout << st2del -> name << " (" << st2del -> ticket << ") successfully отчислен\n";
+                        delete st2del;
+                    }
+                    else
+                        cout << "Нормально введи да, нет такого студента. Давай теперь заного команду вводи\n";
+                }
                 break;
             }
             
