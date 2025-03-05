@@ -48,6 +48,9 @@ void info( Student *head )
 // Показать список студентов
 void ShowStudents ( Student *head )
 {
+    if ( !head )
+        return "Список пуст";
+
     Student *out = head;
     int i = 1;
     while ( out )
