@@ -5,17 +5,17 @@ class vect
 {
     private:
         int dim, num; // размерность и номер объекта
-        double b; // компаненты вектора
+        double* b; // компаненты вектора
         static int count; // количество объектов, созданных программой
     public:
         // Конструктор
         vect( int d )
         {
             dim = d;
-            b = new double[dim];
+            b = new double[dim]{};
             
-            for ( int i = 0; i < dim; i++ )
-                b[i] = 0.0;
+            /*for ( int i = 0; i < dim; i++ )
+                b[i] = 0.0; */
 
             count ++;
             num = count;
@@ -62,7 +62,7 @@ class vect
             
             // Сложение
             for ( int i = 0; i < dim; i++ )
-                res[i] = b[i] + v.b[i];
+                res.b[i] = b[i] + v.b[i];
 
             cout << "Вектора №" << num << " и №" << v.num << " успешно сложены" << endl;
             
@@ -76,7 +76,7 @@ class vect
             
             // Вычитание
             for ( int i = 0; i < dim; i++ )
-                res[i] = b[i] - v.b[i];
+                res.b[i] = b[i] - v.b[i];
 
             cout << "Вектор №" << v.num << " успешно вычтен из вектора №" << num << endl;
             
@@ -90,7 +90,7 @@ class vect
             
             // Противоположирование
             for ( int i = 0; i < dim; i++ )
-                res[i] = -b[i];
+                res.b[i] = -b[i];
 
             cout << "Вектор №" << num << " успешно противоположился (как это называется:( )" << endl;
             
@@ -118,7 +118,7 @@ class vect
             
             // Умножение
             for ( int i = 0; i < dim; i++ )
-                res[i] = b[i] * k;
+                res.b[i] = b[i] * k;
             
             cout << "Вектор №" << num << " успешно умножен на " << k << endl;
             
@@ -134,140 +134,158 @@ class vect
         
 };
 
-class vect
+class matr
 {
     private:
-        int dim, num; // размерность и номер объекта
-        double b; // компаненты вектора
+        int dim, num; // размерность матрицы и номер объекта
+        double* a; // компаненты матрицы
         static int count; // количество объектов, созданных программой
     public:
         // Конструктор
-        vect( int d )
+        matr( int d )
         {
             dim = d;
-            b = new double[dim];
-            
-            for ( int i = 0; i < dim; i++ )
-                b[i] = 0.0;
+            a = new double[dim*dim]{};
 
             count ++;
             num = count;
             
-            cout << "Вектор №" << num << " создан. Размерно вектора: " << dim << endl;
+            cout << "Матрица №" << num << " создана. Размерность матрицы: " << dim << "*" << dim << endl;
         }
         
         // Деструктор
-        ~vect()
+        ~matr()
         {
-            cout << "Вектор №" << num << " уничтожен" << endl;
-            delete[] b;
+            cout << "Матрица №" << num << " уничтожена" << endl;
+            delete[] a;
         }
 
-
         // Оператор присваивания (=)
-        vect& operator=(const vect& v)
+        matr& operator=(const matr& m)
         {
             // Проверка на совпадение 
-            if (this == &v)
+            if (this == &m)
                 return *this; 
             
             // Если другая размерность
-            if (dim != v.dim)
+            if (dim != m.dim)
             {
-                delete[] b;
-                dim = v.dim;
-                b = new double[dim];
+                delete[] a;
+                dim = m.dim;
+                a = new double[dim*dim];
             }
             
             // Присвоение
-            for ( int i = 0; i < dim; i++ )
-                b[i] = v.b[i];
+            for ( int i = 0; i < dim*dim; i++ )
+                a[i] = m.a[i];
             
-            cout << "Вектору №" << num << " присвоено значение вектора №" << v.num << endl;
+            cout << "Матрице №" << num << " присвоено значение матрицы №" << m.num << endl;
             
             return *this;
         }
         
-        // Оператор сложения (v+v)
-        vect& operator+(const vect& v)
+        // Оператор сложения (m+m)
+        matr& operator+(const matr& m)
         {
-            vect res(dim); // Вектор, где хранится результат
+            matr res(dim); // Матрица, где хранится результат
             
             // Сложение
-            for ( int i = 0; i < dim; i++ )
-                res[i] = b[i] + v.b[i];
+            for ( int i = 0; i < dim*dim; i++ )
+                res[i] = a[i] + m.a[i];
 
-            cout << "Вектора №" << num << " и №" << v.num << " успешно сложены" << endl;
+            cout << "Матрицы №" << num << " и №" << m.num << " успешно сложены" << endl;
             
             return res;
         }
         
-        // Оператор вычитания (v-v)
-        vect& operator-(const vect& v)
+        // Оператор вычитания (m-m)
+        matr& operator-(const matr& matr)
         {
-            vect res(dim); // Вектор, где хранится результат
+            matr res(dim); // Матрица, где хранится результат
             
             // Вычитание
-            for ( int i = 0; i < dim; i++ )
-                res[i] = b[i] - v.b[i];
+            for ( int i = 0; i < dim*dim; i++ )
+                res[i] = a[i] - m.a[i];
 
-            cout << "Вектор №" << v.num << " успешно вычтен из вектора №" << num << endl;
+            cout << "Матрица №" << m.num << " успешно вычтена из матрицы №" << num << endl;
             
             return res;
         }
         
-        // Оператор противоположирования (мое авторское слово) (-v)
+        // Оператор противоположирования (мое авторское слово) (-m)
         vect& operator-() const
         {
-            vect res(dim); // Вектор, где хранится результат
+            matr res(dim); // Матрица, где хранится результат
             
             // Противоположирование
-            for ( int i = 0; i < dim; i++ )
-                res[i] = -b[i];
+            for ( int i = 0; i < dim*dim; i++ )
+                res[i] = -a[i];
 
-            cout << "Вектор №" << num << " успешно противоположился (как это называется:( )" << endl;
+            cout << "Матрица №" << num << " успешно противоположилась (как это называется >:0 )" << endl;
             
             return res;
         }
         
-        // Оператор умножения вектора на вектор (v*v)
-        vect& operator*(const vect& v) const
+        // Оператор умножения матрицы на матрицу (m*m)
+        matr& operator*(const matr& m) const
         {
-            vect res(dim); // Вектор, где хранится результат
+            matr res(dim); // Матрица, где хранится результат
             
             // Умножение
             for ( int i = 0; i < dim; i++ )
-                res[i] += b[i] * v.b[i];
+                for (int j = 0; j < dim; j++ )
+                {
+                    double sum = 0;
+                    for ( int k = 0; k < dim; k++ )
+                        sum += a[i*dim + k] * m.a[k*dim + j]
+                    res.a[i*dim + j] = sum;
+                }
 
-            cout << "Вектор №" << num << " вектор №" << v.num << " успешно перемножены" << endl;
+            cout << "Матрица №" << num << " и матрица №" << v.num << " успешно перемножены" << endl;
             
             return res;
         }
         
-        // Оператор умножения вектора на число (v*k)
-        vect& operator*(double k) const
+        // Оператор умножения матрицы на число (v*k)
+        matr& operator*(double k) const
         {
-            vect res(dim); // вектор, где хранятся результаты
+            matr res(dim); // матрица, где хранятся результаты
             
             // Умножение
-            for ( int i = 0; i < dim; i++ )
-                res[i] = k * b[i];
+            for ( int i = 0; i < dim*dim; i++ )
+                res[i] = k * a[i];
             
-            cout << "Вектор №" << num << " успешно умножен на " << k << endl;
+            cout << "Матрица №" << num << " успешно умножена на " << k << endl;
             
             return res;
         }
         
-        // Умножение числа на вектор (k*v)
-        friend vect operator*(double k, const vect& v)
+        // Умножение числа на матрицу (k*m)
+        friend matr operator*(double k, const matr& m)
         {
-            cout << "Вектор №" << num << " успешно умножен на " << k << endl;
-            return v * k;
+            cout << "Матрица №" << num << " успешно умножена на " << k << endl;
+            return m * k;
         }
         
 };
 
 int main()
 {
+    vect v1(3), v2(3);
+    vect v3(3), v4(3), v5(3), v6(3);
+
+    v3 = v1 + v2;
+    cout << v3 << endl;
     
+    v4 = v1 - v2;
+    cout << v4 << endl;
+    
+    v5 = -v1;
+    cout << v5 << endl;
+    
+    double mult = v1 * v2;
+    cout << mult << endl;
+    
+    v6 = 3.5 * v1;
+    cout << v6 << endl;
 }
