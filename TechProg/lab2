@@ -1,0 +1,273 @@
+#include <iostream>
+using namespace std;
+
+class vect
+{
+    private:
+        int dim, num; // размерность и номер объекта
+        double b; // компаненты вектора
+        static int count; // количество объектов, созданных программой
+    public:
+        // Конструктор
+        vect( int d )
+        {
+            dim = d;
+            b = new double[dim];
+            
+            for ( int i = 0; i < dim; i++ )
+                b[i] = 0.0;
+
+            count ++;
+            num = count;
+            
+            cout << "Вектор №" << num << " создан. Размерно вектора: " << dim << endl;
+        }
+        
+        // Деструктор
+        ~vect()
+        {
+            cout << "Вектор №" << num << " уничтожен" << endl;
+            delete[] b;
+        }
+
+
+        // Оператор присваивания (=)
+        vect& operator=(const vect& v)
+        {
+            // Проверка на совпадение 
+            if (this == &v)
+                return *this; 
+            
+            // Если другая размерность
+            if (dim != v.dim)
+            {
+                delete[] b;
+                dim = v.dim;
+                b = new double[dim];
+            }
+            
+            // Присвоение
+            for ( int i = 0; i < dim; i++ )
+                b[i] = v.b[i];
+            
+            cout << "Вектору №" << num << " присвоено значение вектора №" << v.num << endl;
+            
+            return *this;
+        }
+        
+        // Оператор сложения (v+v)
+        vect& operator+(const vect& v)
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Сложение
+            for ( int i = 0; i < dim; i++ )
+                res[i] = b[i] + v.b[i];
+
+            cout << "Вектора №" << num << " и №" << v.num << " успешно сложены" << endl;
+            
+            return res;
+        }
+        
+        // Оператор вычитания (v-v)
+        vect& operator-(const vect& v)
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Вычитание
+            for ( int i = 0; i < dim; i++ )
+                res[i] = b[i] - v.b[i];
+
+            cout << "Вектор №" << v.num << " успешно вычтен из вектора №" << num << endl;
+            
+            return res;
+        }
+        
+        // Оператор противоположирования (мое авторское слово) (-v)
+        vect& operator-() const
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Противоположирование
+            for ( int i = 0; i < dim; i++ )
+                res[i] = -b[i];
+
+            cout << "Вектор №" << num << " успешно противоположился (как это называется:( )" << endl;
+            
+            return res;
+        }
+        
+        // Оператор умножения вектора на вектор (v*v)
+        vect& operator*(const vect& v) const
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Умножение
+            for ( int i = 0; i < dim; i++ )
+                res[i] += b[i] * v.b[i];
+
+            cout << "Вектор №" << num << " вектор №" << v.num << " успешно перемножены" << endl;
+            
+            return res;
+        }
+        
+        // Оператор умножения вектора на число (v*k)
+        vect& operator*(double k) const
+        {
+            vect res(dim); // вектор, где хранятся результаты
+            
+            // Умножение
+            for ( int i = 0; i < dim; i++ )
+                res[i] = b[i] * k;
+            
+            cout << "Вектор №" << num << " успешно умножен на " << k << endl;
+            
+            return res;
+        }
+        
+        // Умножение числа на вектор (k*v)
+        friend vect operator*(double k, const vect& v)
+        {
+            cout << "Вектор №" << v.num << " успешно умножен на " << k << endl;
+            return v * k;
+        }
+        
+};
+
+class vect
+{
+    private:
+        int dim, num; // размерность и номер объекта
+        double b; // компаненты вектора
+        static int count; // количество объектов, созданных программой
+    public:
+        // Конструктор
+        vect( int d )
+        {
+            dim = d;
+            b = new double[dim];
+            
+            for ( int i = 0; i < dim; i++ )
+                b[i] = 0.0;
+
+            count ++;
+            num = count;
+            
+            cout << "Вектор №" << num << " создан. Размерно вектора: " << dim << endl;
+        }
+        
+        // Деструктор
+        ~vect()
+        {
+            cout << "Вектор №" << num << " уничтожен" << endl;
+            delete[] b;
+        }
+
+
+        // Оператор присваивания (=)
+        vect& operator=(const vect& v)
+        {
+            // Проверка на совпадение 
+            if (this == &v)
+                return *this; 
+            
+            // Если другая размерность
+            if (dim != v.dim)
+            {
+                delete[] b;
+                dim = v.dim;
+                b = new double[dim];
+            }
+            
+            // Присвоение
+            for ( int i = 0; i < dim; i++ )
+                b[i] = v.b[i];
+            
+            cout << "Вектору №" << num << " присвоено значение вектора №" << v.num << endl;
+            
+            return *this;
+        }
+        
+        // Оператор сложения (v+v)
+        vect& operator+(const vect& v)
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Сложение
+            for ( int i = 0; i < dim; i++ )
+                res[i] = b[i] + v.b[i];
+
+            cout << "Вектора №" << num << " и №" << v.num << " успешно сложены" << endl;
+            
+            return res;
+        }
+        
+        // Оператор вычитания (v-v)
+        vect& operator-(const vect& v)
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Вычитание
+            for ( int i = 0; i < dim; i++ )
+                res[i] = b[i] - v.b[i];
+
+            cout << "Вектор №" << v.num << " успешно вычтен из вектора №" << num << endl;
+            
+            return res;
+        }
+        
+        // Оператор противоположирования (мое авторское слово) (-v)
+        vect& operator-() const
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Противоположирование
+            for ( int i = 0; i < dim; i++ )
+                res[i] = -b[i];
+
+            cout << "Вектор №" << num << " успешно противоположился (как это называется:( )" << endl;
+            
+            return res;
+        }
+        
+        // Оператор умножения вектора на вектор (v*v)
+        vect& operator*(const vect& v) const
+        {
+            vect res(dim); // Вектор, где хранится результат
+            
+            // Умножение
+            for ( int i = 0; i < dim; i++ )
+                res[i] += b[i] * v.b[i];
+
+            cout << "Вектор №" << num << " вектор №" << v.num << " успешно перемножены" << endl;
+            
+            return res;
+        }
+        
+        // Оператор умножения вектора на число (v*k)
+        vect& operator*(double k) const
+        {
+            vect res(dim); // вектор, где хранятся результаты
+            
+            // Умножение
+            for ( int i = 0; i < dim; i++ )
+                res[i] = k * b[i];
+            
+            cout << "Вектор №" << num << " успешно умножен на " << k << endl;
+            
+            return res;
+        }
+        
+        // Умножение числа на вектор (k*v)
+        friend vect operator*(double k, const vect& v)
+        {
+            cout << "Вектор №" << num << " успешно умножен на " << k << endl;
+            return v * k;
+        }
+        
+};
+
+int main()
+{
+    
+}
