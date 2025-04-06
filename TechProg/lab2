@@ -104,7 +104,7 @@ class vect
             
             // Умножение
             for ( int i = 0; i < dim; i++ )
-                res[i] += b[i] * v.b[i];
+                res.b[i] += b[i] * v.b[i];
 
             cout << "Вектор №" << num << " вектор №" << v.num << " успешно перемножены" << endl;
             
@@ -191,7 +191,7 @@ class matr
             
             // Сложение
             for ( int i = 0; i < dim*dim; i++ )
-                res[i] = a[i] + m.a[i];
+                res.a[i] = a[i] + m.a[i];
 
             cout << "Матрицы №" << num << " и №" << m.num << " успешно сложены" << endl;
             
@@ -199,13 +199,13 @@ class matr
         }
         
         // Оператор вычитания (m-m)
-        matr& operator-(const matr& matr)
+        matr& operator-(const matr& m)
         {
             matr res(dim); // Матрица, где хранится результат
             
             // Вычитание
             for ( int i = 0; i < dim*dim; i++ )
-                res[i] = a[i] - m.a[i];
+                res.a[i] = a[i] - m.a[i];
 
             cout << "Матрица №" << m.num << " успешно вычтена из матрицы №" << num << endl;
             
@@ -213,13 +213,13 @@ class matr
         }
         
         // Оператор противоположирования (мое авторское слово) (-m)
-        vect& operator-() const
+        matr& operator-() const
         {
             matr res(dim); // Матрица, где хранится результат
             
             // Противоположирование
             for ( int i = 0; i < dim*dim; i++ )
-                res[i] = -a[i];
+                res.a[i] = -a[i];
 
             cout << "Матрица №" << num << " успешно противоположилась (как это называется >:0 )" << endl;
             
@@ -237,11 +237,11 @@ class matr
                 {
                     double sum = 0;
                     for ( int k = 0; k < dim; k++ )
-                        sum += a[i*dim + k] * m.a[k*dim + j]
+                        sum += a[i*dim + k] * m.a[k*dim + j];
                     res.a[i*dim + j] = sum;
                 }
 
-            cout << "Матрица №" << num << " и матрица №" << v.num << " успешно перемножены" << endl;
+            cout << "Матрица №" << num << " и матрица №" << m.num << " успешно перемножены" << endl;
             
             return res;
         }
@@ -253,7 +253,7 @@ class matr
             
             // Умножение
             for ( int i = 0; i < dim*dim; i++ )
-                res[i] = k * a[i];
+                res.a[i] = k * a[i];
             
             cout << "Матрица №" << num << " успешно умножена на " << k << endl;
             
@@ -263,7 +263,7 @@ class matr
         // Умножение числа на матрицу (k*m)
         friend matr operator*(double k, const matr& m)
         {
-            cout << "Матрица №" << num << " успешно умножена на " << k << endl;
+            cout << "Матрица №" << m.num << " успешно умножена на " << k << endl;
             return m * k;
         }
         
