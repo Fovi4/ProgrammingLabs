@@ -20,16 +20,15 @@ class vect
             count ++;
             num = count;
             
-            cout << "Вектор №" << num << " создан. Размерно вектора: " << dim << endl;
+            cout << "Вектор №" << num << " создан. Размерность вектора: " << dim << endl;
         }
         
         // Деструктор
-        ~vect()
+        /*~vect()
         {
             cout << "Вектор №" << num << " уничтожен" << endl;
             delete[] b;
-        }
-
+        }*/
 
         // Оператор присваивания (=)
         vect& operator=(const vect& v)
@@ -98,13 +97,13 @@ class vect
         }
         
         // Оператор умножения вектора на вектор (v*v)
-        vect& operator*(const vect& v) const
+        double operator*(const vect& v) const
         {
-            vect res(dim); // Вектор, где хранится результат
-            
+            double res = 0.0; // Результат
+
             // Умножение
             for ( int i = 0; i < dim; i++ )
-                res.b[i] += b[i] * v.b[i];
+                res += b[i] * v.b[i];
 
             cout << "Вектор №" << num << " вектор №" << v.num << " успешно перемножены" << endl;
             
@@ -132,7 +131,22 @@ class vect
             return v * k;
         }
         
+        friend ostream& operator<<(ostream& os, const vect& v)
+        {
+            os << "Вектор №" << v.num << "\n[";
+            for ( int i = 0; i < v.dim; i++ )
+            {
+                if ( i > 0 ) os << ", ";
+                os << v.b[i];
+            }
+            os << "]";
+            return os;
+        }
+        
+        friend class matr;
 };
+
+int vect::count = 0;
 
 class matr
 {
@@ -267,16 +281,30 @@ class matr
             return m * k;
         }
         
+        vect operator*(const vect& v) const {
+            cout << "Умножение матрицы №" << num << " на вектор №" << v.num << endl;
+            vect res(dim);
+            for (int i = 0; i < dim; i++)
+            {
+                double sum = 0;
+                for (int j = 0; j < dim; j++)
+                    sum += a[i * dim + j] * v.b[j];
+                res.b[i] = sum;
+            }
+            return res;
+        }
 };
 
-int main()
+int matr::count = 0;
+
+/*int main()
 {
     vect v1(3), v2(3);
     vect v3(3), v4(3), v5(3), v6(3);
 
     v3 = v1 + v2;
     cout << v3 << endl;
-    
+
     v4 = v1 - v2;
     cout << v4 << endl;
     
@@ -288,4 +316,25 @@ int main()
     
     v6 = 3.5 * v1;
     cout << v6 << endl;
+    
+    return 0;
+} */
+
+int main() {
+    vect v1(3), v2(3);
+    
+    // Заполнение векторов
+    vect v3 = v1 + v2;
+    double dot = v1 * v2;
+    vect v4 = -v1;
+    vect v5 = 2.5 * v1;
+    
+    cout << "v1: " << v1 << std::endl;
+    cout << "v2: " << v2 << std::endl;
+    cout << "v1 + v2: " << v3 << std::endl;
+    cout << "Скалярное произведение: " << dot << std::endl;
+    //cout << "-v1: " << v4 << std::endl;
+    cout << "2.5 * v1: " << v5 << std::endl;
+    
+    return 0;
 }
