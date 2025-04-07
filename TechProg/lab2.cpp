@@ -24,11 +24,11 @@ class vect
         }
         
         // Деструктор
-        /*~vect()
+        ~vect()
         {
             cout << "Вектор №" << num << " уничтожен" << endl;
             delete[] b;
-        }*/
+        }
 
         // функция заполнения
         void fill(double* values)
@@ -171,7 +171,7 @@ class matr
             count ++;
             num = count;
             
-            cout << "Матрица №" << num << " создана. Размерность матрицы: " << dim << "*" << dim << endl;
+            cout << "Матрица №" << num << " создана. Размерность матрицы: " << dim << "x" << dim << endl;
         }
         
         // Деструктор
@@ -180,9 +180,16 @@ class matr
             cout << "Матрица №" << num << " уничтожена" << endl;
             delete[] a;
         }
+        
+        // функция заполнения
+        void fill(double* values)
+        {
+            for (int i = 0; i < dim*dim; i++)
+                a[i] = values[i];
+        }
 
         // Оператор присваивания (=)
-        matr& operator=(const matr& m)
+        matr operator=(const matr& m)
         {
             // Проверка на совпадение 
             if (this == &m)
@@ -206,7 +213,7 @@ class matr
         }
         
         // Оператор сложения (m+m)
-        matr& operator+(const matr& m)
+        matr operator+(const matr& m)
         {
             matr res(dim); // Матрица, где хранится результат
             
@@ -220,7 +227,7 @@ class matr
         }
         
         // Оператор вычитания (m-m)
-        matr& operator-(const matr& m)
+        matr operator-(const matr& m)
         {
             matr res(dim); // Матрица, где хранится результат
             
@@ -234,7 +241,7 @@ class matr
         }
         
         // Оператор противоположирования (мое авторское слово) (-m)
-        matr& operator-() const
+        matr operator-() const
         {
             matr res(dim); // Матрица, где хранится результат
             
@@ -248,9 +255,9 @@ class matr
         }
         
         // Оператор умножения матрицы на матрицу (m*m)
-        matr& operator*(const matr& m) const
+        matr operator*(const matr& m) const
         {
-            matr res(dim); // Матрица, где хранится результат
+            matr res(dim*dim); // Матрица, где хранится результат
             
             // Умножение
             for ( int i = 0; i < dim; i++ )
@@ -268,7 +275,7 @@ class matr
         }
         
         // Оператор умножения матрицы на число (v*k)
-        matr& operator*(double k) const
+        matr operator*(double k) const
         {
             matr res(dim); // матрица, где хранятся результаты
             
@@ -300,11 +307,24 @@ class matr
             }
             return res;
         }
+        
+        friend ostream& operator<<(ostream& os, const matr& m)
+        {
+            os << "Матрица №" << m.num << "\n[";
+            for ( int i = 0; i < m.dim; i++ )
+            {
+                if ( i > 0 ) os << ", ";
+                os << m.a[i];
+            }
+            os << "]";
+            return os;
+        }
 };
 
 int matr::count = 0;
 
-int main() {
+int main()
+{
     vect v1(3), v2(3);
     double a1[3] = {1, 2, 3}, a2[3] = {4, 5, 6};
     
@@ -320,12 +340,40 @@ int main() {
     
     cout << endl;
     double dot = v1 * v2;
-    cout << endl;
+    cout << "Результат умножения: " << dot << endl;
     
+    cout << endl;
     vect v4 = -v1;
+    cout << v4 << endl;
+    
+    cout << endl;
+    vect v5 = 2.5 * v1;
     cout << endl;
     
-    vect v5 = 2.5 * v1;
+    // Создаем матрицы 2x2
+    matr m1(2), m2(2);
+    
+    // Данные для заполнения
+    double data1[] = {1, 2, 3, 4};
+    double data2[] = {5, 6, 7, 8};
+    
+    // Заполняем матрицы
+    m1.fill(data1);
+    m2.fill(data2);
+    
+    cout << m1 << endl;
+    cout << m2 << endl;
+    
+    // Сложение матриц
+    matr m3 = m1 + m2;
+    cout << "Сумма матриц:\n" << m3 << endl;
+    
+    // Скалярное произведение
+    matr m4 = m1 * m2;
+    cout << "Скалярное произведение: " << m4 << endl << endl;
+    
+    vect v6 = m1 * v1;
+    cout << v6 << endl << endl;
     
     return 0;
 }
