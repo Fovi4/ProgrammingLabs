@@ -31,7 +31,7 @@ class vect
         }*/
 
         // Оператор присваивания (=)
-        vect& operator=(const vect& v)
+        vect operator=(const vect& v)
         {
             // Проверка на совпадение 
             if (this == &v)
@@ -55,7 +55,7 @@ class vect
         }
         
         // Оператор сложения (v+v)
-        vect& operator+(const vect& v)
+        vect operator+(const vect& v)
         {
             vect res(dim); // Вектор, где хранится результат
             
@@ -69,7 +69,7 @@ class vect
         }
         
         // Оператор вычитания (v-v)
-        vect& operator-(const vect& v)
+        vect operator-(const vect& v)
         {
             vect res(dim); // Вектор, где хранится результат
             
@@ -83,7 +83,7 @@ class vect
         }
         
         // Оператор противоположирования (мое авторское слово) (-v)
-        vect& operator-() const
+        vect operator-() const
         {
             vect res(dim); // Вектор, где хранится результат
             
@@ -111,7 +111,7 @@ class vect
         }
         
         // Оператор умножения вектора на число (v*k)
-        vect& operator*(double k) const
+        vect operator*(double k) const
         {
             vect res(dim); // вектор, где хранятся результаты
             
