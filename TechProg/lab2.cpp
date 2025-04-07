@@ -30,6 +30,13 @@ class vect
             delete[] b;
         }*/
 
+        // функция заполнения
+        void fill(double* values)
+        {
+            for (int i = 0; i < dim; i++)
+                b[i] = values[i];
+        }
+        
         // Оператор присваивания (=)
         vect operator=(const vect& v)
         {
@@ -297,44 +304,28 @@ class matr
 
 int matr::count = 0;
 
-/*int main()
-{
-    vect v1(3), v2(3);
-    vect v3(3), v4(3), v5(3), v6(3);
-
-    v3 = v1 + v2;
-    cout << v3 << endl;
-
-    v4 = v1 - v2;
-    cout << v4 << endl;
-    
-    v5 = -v1;
-    cout << v5 << endl;
-    
-    double mult = v1 * v2;
-    cout << mult << endl;
-    
-    v6 = 3.5 * v1;
-    cout << v6 << endl;
-    
-    return 0;
-} */
-
 int main() {
     vect v1(3), v2(3);
+    double a1[3] = {1, 2, 3}, a2[3] = {4, 5, 6};
     
-    // Заполнение векторов
+    v1.fill(a1);
+    v2.fill(a2);
+    cout << endl;
+    
+    cout << v1 << endl << v2 << endl;
+    
+    cout << endl;
     vect v3 = v1 + v2;
-    double dot = v1 * v2;
-    vect v4 = -v1;
-    vect v5 = 2.5 * v1;
+    cout << v3 << endl;
     
-    cout << "v1: " << v1 << std::endl;
-    cout << "v2: " << v2 << std::endl;
-    cout << "v1 + v2: " << v3 << std::endl;
-    cout << "Скалярное произведение: " << dot << std::endl;
-    //cout << "-v1: " << v4 << std::endl;
-    cout << "2.5 * v1: " << v5 << std::endl;
+    cout << endl;
+    double dot = v1 * v2;
+    cout << endl;
+    
+    vect v4 = -v1;
+    cout << endl;
+    
+    vect v5 = 2.5 * v1;
     
     return 0;
 }
